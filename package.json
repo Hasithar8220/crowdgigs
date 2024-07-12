@@ -4,7 +4,7 @@
   "description": "Crowdgigs DApp",
   "main": "public/app.js",
   "scripts": {
-    "start": "webpack serve --mode development",
+    "start": "npx webpack serve --mode production --env PORT=8080",
     "build": "webpack --mode production"
   },
   "dependencies": {
