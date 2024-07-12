@@ -1,0 +1,24 @@
+<md-dialog class="_md md-transition-in md-dialog-largescreen" aria-label="Assign Rolls" ng-controller="UserRoleController">
+  <md-content class="md-padding" layout="column">
+      <md-list>
+        <h3>{{ ctrl.userRoll }}</h3>
+        <md-item ng-repeat="item in privileges | filter:search">
+          <md-item-content>
+            <div class="md-tile-content">
+              <md-input-container class="md-block mb-30 mt-20">
+
+                <md-checkbox ng-model="item.isSelected" ng-checked="ctrl.AssignedPrivileges.includes(item.id.toString())" aria-label="privileges">
+                  {{item.key}}
+              </md-checkbox>
+              
+              </md-input-container>
+            </div>
+          </md-item-content>
+          <md-divider md-inset hide-sm ng-if="!$last"></md-divider>
+          <md-divider hide-gt-sm ng-if="!$last"></md-divider>
+        </md-item>
+        <md-button class="md-raised md-accent md-button" ng-click="assignPrivileges(ctrl.userRollId, privileges)">Submit</md-button>
+        <md-button class="sec-button" ng-click="answer('not useful')">Cancel</md-button>
+      </md-list>
+  </md-content>
+</md-dialog>
