@@ -25,6 +25,7 @@ module.exports = {
     ],
   },
   devServer: {
+    allowedHosts: 'all',
     static: path.join(__dirname, 'public'),
     compress: true,
     port: 8080,
