@@ -2,8 +2,8 @@ import angular from 'angular';
 import 'angular-animate';
 import 'angular-aria';
 import 'angular-material';
-import blockchainService from './services/blockchainService';
-
+import blockchainService from './services/blockchainservice';
+import './assets/css/style.css';
 angular.module('StarterApp', ['ngMaterial'])
   .factory('blockchainService', function() {
     return blockchainService;

@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './public/app.js', // Ensure this path is correct
+  entry: './public/app.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -18,10 +18,15 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   devServer: {
-    contentBase: path.resolve(__dirname, 'public'),
+    static: path.join(__dirname, 'public'),
+    compress: true,
     port: 8080,
   },
 };
