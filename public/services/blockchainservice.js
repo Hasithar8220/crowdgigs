@@ -27,6 +27,10 @@ async function getUserAddress() {
 
 async function checkBalance(address) {
    
+    let walletClient = createWalletClient({
+        transport: custom(window.ethereum),
+        chain: celoAlfajores,
+    });
     const balance = await walletClient.getBalance({
         address: address,
     });
