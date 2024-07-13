@@ -40,12 +40,12 @@ angular.module('StarterApp', ['ngMaterial'])
       $scope.steps = [];
       try {
         $scope.steps.push('Claiming reward...');
-        const receiverAddresses = await blockchainService.getUserAddress();
-        $scope.steps.push(`Receiver Addresses: ${receiverAddresses}`);
+        const receiverAddress = await blockchainService.getUserAddress();
+        $scope.steps.push(`Receiver Addresses: ${receiverAddress}`);
         const transferValue = '0.1'; // Replace with actual value
 
         // Ensure receiverAddresses is an array and get the first element
-        const receiverAddress = Array.isArray(receiverAddresses) && receiverAddresses.length > 0 ? receiverAddresses[0] : null;
+        //const receiverAddress = Array.isArray(receiverAddresses) && receiverAddresses.length > 0 ? receiverAddresses[0] : null;
 
         if (!receiverAddress) {
           $scope.steps.push('Failed to retrieve receiver address.');
