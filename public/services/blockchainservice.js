@@ -27,12 +27,11 @@ async function claimReward(to, amount) {
 
     const amountInWei = parseEther(amount);
     
-
     const tx = await walletClient.writeContract({
         address: rewardDistributorAddress,
         abi: RewardDistributorABI,
         functionName: "claimReward",
-        account: walletClient.getAddresses()[0],
+        account: to,
         args: [to, amountInWei],
     });
 
