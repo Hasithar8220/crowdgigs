@@ -41,7 +41,6 @@ angular.module('StarterApp', ['ngMaterial'])
       try {
         $scope.steps.push('Claiming reward...');
         const receiverAddress = await blockchainService.getUserAddress();
-        $scope.steps.push(`Receiver Addresses: ${receiverAddress}`);
         const transferValue = '0.1'; // Replace with actual value
 
         // Ensure receiverAddresses is an array and get the first element
