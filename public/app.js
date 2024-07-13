@@ -18,10 +18,14 @@ angular.module('StarterApp', ['ngMaterial'])
     };
 
     $scope.claimReward = async function() {
-      const tokenAddress = '0xYourTokenAddress'; // Replace with actual token address
+      const tokenAddress = '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1'; // this is cUSD (CELO usd token address)
       const receiverAddress = '0xReceiverAddress'; // Replace with user's wallet address
       const transferValue = '0.1'; // Replace with actual value
       const tokenDecimals = 18; // Replace with actual token decimals
+
+      const [address] = await blockchainService.client.getAddresses();
+
+      console.log(address);
 
       const success = await blockchainService.requestTransfer(tokenAddress, receiverAddress, transferValue, tokenDecimals);
       if (success) {

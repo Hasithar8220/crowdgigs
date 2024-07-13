@@ -12,13 +12,34 @@ const publicClient = createPublicClient({
   transport: http()
 });
 
-// Define the ABI for the stable token
-const stableTokenAbi = [
-  // ... Add the ABI here
-];
+let stableTokenAbi = [];
+
+// Function to load the ABI from the JSON file
+async function loadAbi() {
+  try {
+    const response = await fetch('/abi/cusd-abi.json');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    stableTokenAbi = await response.json();
+  } catch (error) {
+    console.error("Error loading ABI:", error);
+  }
+}
+
+// Load the ABI when the module is initialized
+loadAbi();
 
 const blockchainService = {
   requestTransfer: async (tokenAddress, receiverAddress, transferValue, tokenDecimals) => {
+    // Ensure the ABI is loaded before attempting the transfer
+    if (!stableTokenAbi.length) {
+      await loadAbi();
+    }
+
+    console.log(tokenAddress, receiverAddress, transferValue, tokenDecimals);
+    console.log(stableTokenAbi);
+
     try {
       let hash = await client.sendTransaction({
         to: tokenAddress,
