@@ -1,4 +1,4 @@
-import { createPublicClient, createWalletClient, custom, http, parseEther } from 'viem';
+import { createPublicClient, createWalletClient, custom, http,parseUnits, parseEther } from 'viem';
 import { celoAlfajores } from 'viem/chains';
 import RewardDistributorABI from '../abi/RewardDistributorABI.json';
 
@@ -25,7 +25,8 @@ async function claimReward(to, amount) {
         chain: celoAlfajores,
     });
     alert(to); alert(amount); 
-    const amountInWei = parseEther(amount, 18);
+   // const amountInWei = parseEther(amount);
+    const amountInWei = parseUnits(amount, 18);
     
     alert(amountInWei);
 
@@ -36,6 +37,8 @@ async function claimReward(to, amount) {
         account: to,
         args: [to, amountInWei],
     });
+
+    alert(tx);
 
     let out={};
 
