@@ -1,6 +1,7 @@
-import { createPublicClient, createWalletClient, custom, http,parseUnits, parseEther } from 'viem';
+import { createPublicClient, createWalletClient, custom, http,parseUnits, parseEther, formatEther } from 'viem';
 import { celoAlfajores } from 'viem/chains';
 import RewardDistributorABI from '../abi/RewardDistributorABI.json';
+import stableTokenABI from '../abi/cusd-abi.json';
 
 const publicClient = createPublicClient({
     chain: celoAlfajores,
@@ -25,19 +26,24 @@ async function getUserAddress() {
     return [address];
 }
 
-async function checkBalance(address) {
-   
-    let walletClient = createWalletClient({
-        transport: custom(window.ethereum),
-        chain: celoAlfajores,
-    });
-    const balance = await walletClient.getBalance({
-        address: address,
-    });
+async function checkCUSDBalance(address) {
 
-    console.log("Account Balance:", balance);
-    return balance;
-}
+    let StableTokenContract = getContract({
+        abi: stableTokenABI,
+        address: cUSDTokenAddress,
+        publicClient,
+    });
+  
+    let balanceInBigNumber = await StableTokenContract.read.balanceOf([
+        address,
+    ]);
+  
+    let balanceInWei = balanceInBigNumber.toString();
+  
+    let balanceInEthers = formatEther(balanceInWei);
+  
+    return balanceInEthers;
+  }
 
 async function claimReward(to, amount) {
     let walletClient = createWalletClient({
@@ -71,5 +77,5 @@ async function claimReward(to, amount) {
 export default {
     getUserAddress,
     claimReward,
-    checkBalance
+    checkCUSDBalance
 };
