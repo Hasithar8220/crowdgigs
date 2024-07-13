@@ -25,6 +25,16 @@ async function getUserAddress() {
     return [address];
 }
 
+async function checkBalance(address) {
+   
+    const balance = await walletClient.getBalance({
+        address: address,
+    });
+
+    console.log("Account Balance:", balance);
+    return balance;
+}
+
 async function claimReward(to, amount) {
     let walletClient = createWalletClient({
         transport: custom(window.ethereum),

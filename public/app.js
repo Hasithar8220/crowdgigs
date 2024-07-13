@@ -14,6 +14,35 @@ angular.module('StarterApp', ['ngMaterial'])
     $scope.initializing = true;
 
     $scope.init = async function() {
+
+      if (window && window.ethereum) {
+        // User has a injected wallet
+      
+        if (window.ethereum.isMiniPay) {
+          // User is using Minipay
+      
+          // Requesting account addresses
+          let accounts = await window.ethereum.request({
+            method: "eth_requestAccounts",
+            params: [],
+          });
+      
+        
+          if(accounts && accounts.length > 0){
+  // Injected wallets inject all available addresses,
+          // to comply with API Minipay injects one address but in the form of array
+          console.log(accounts[0]);
+          }else{
+            alert('This app only support with operamini, minipay app')
+          }
+        }else{
+          alert('This app only support with operamini, minipay app')
+        }
+      
+        
+      }
+
+
       $scope.steps.push('Initializing blockchain service...');
       try {
         // Get user address from Minipay
@@ -31,6 +60,9 @@ angular.module('StarterApp', ['ngMaterial'])
 
         $scope.receiverAddress = receiverAddress;
         $scope.steps.push('Blockchain service initialized.');
+
+        $scope.balance = await blockchainService.checkBalance(address);
+
       } catch (error) {
         $scope.steps.push(`Error during initialization: ${error.message}`);
       } finally {
