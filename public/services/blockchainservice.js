@@ -1,111 +1,44 @@
-import { createPublicClient, createWalletClient, custom, getContract, http, parseEther, stringToHex } from 'viem';
+import { createWalletClient, custom, parseUnits, createPublicClient, http } from 'viem';
 import { celoAlfajores } from 'viem/chains';
 import StableTokenABI from '../abi/cusd-abi.json';
-import MinipayNFTABI from '../abi/minipay-nft.json';
 
+// Initialize the public client
 const publicClient = createPublicClient({
   chain: celoAlfajores,
   transport: http(),
 });
 
-const cUSDTokenAddress = '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1'; // Testnet
-const MINIPAY_NFT_CONTRACT = '0xE8F4699baba6C86DA9729b1B0a1DA1Bd4136eFeF'; // Testnet
+// Initialize the wallet client
+const walletClient = createWalletClient({
+  chain: celoAlfajores,
+  transport: custom(window.ethereum)
+});
+
+const cUSDTokenAddress = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1";
 
 const blockchainService = {
   address: null,
 
-  getUserAddress: async function () {
-    if (typeof window !== 'undefined' && window.ethereum) {
-      let walletClient = createWalletClient({
-        transport: custom(window.ethereum),
-        chain: celoAlfajores,
-      });
-
-      let [address] = await walletClient.getAddresses();
-      this.address = address;
-      return address;
-    }
+  async getUserAddress() {
+    const [address] = await walletClient.getAddresses();
+    this.address = address;
+    return address;
   },
 
-  sendCUSD: async function (to, amount) {
-    let walletClient = createWalletClient({
-      transport: custom(window.ethereum),
-      chain: celoAlfajores,
-    });
-
-    let [address] = await walletClient.getAddresses();
-    const amountInWei = parseEther(amount);
+  async sendCUSD(to, amount) {
+    const amountInWei = parseUnits(amount, 18);
 
     const tx = await walletClient.writeContract({
       address: cUSDTokenAddress,
-      abi: StableTokenABI.abi,
-      functionName: 'transfer',
-      account: address,
+      abi: StableTokenABI,
+      functionName: "transfer",
+      account: this.address,
       args: [to, amountInWei],
     });
 
-    let receipt = await publicClient.waitForTransactionReceipt({ hash: tx });
-    return receipt;
-  },
-
-  mintMinipayNFT: async function () {
-    let walletClient = createWalletClient({
-      transport: custom(window.ethereum),
-      chain: celoAlfajores,
-    });
-
-    let [address] = await walletClient.getAddresses();
-
-    const tx = await walletClient.writeContract({
-      address: MINIPAY_NFT_CONTRACT,
-      abi: MinipayNFTABI.abi,
-      functionName: 'safeMint',
-      account: address,
-      args: [address, 'https://cdn-production-opera-website.operacdn.com/staticfiles/assets/images/sections/2023/hero-top/products/minipay/minipay__desktop@2x.a17626ddb042.webp'],
-    });
-
     const receipt = await publicClient.waitForTransactionReceipt({ hash: tx });
-    return receipt;
-  },
-
-  getNFTs: async function () {
-    let walletClient = createWalletClient({
-      transport: custom(window.ethereum),
-      chain: celoAlfajores,
-    });
-
-    const minipayNFTContract = getContract({
-      abi: MinipayNFTABI.abi,
-      address: MINIPAY_NFT_CONTRACT,
-      client: publicClient,
-    });
-
-    const [address] = await walletClient.getAddresses();
-    const nfts = await minipayNFTContract.read.getNFTsByAddress([address]);
-
-    let tokenURIs = [];
-    for (let i = 0; i < nfts.length; i++) {
-      const tokenURI = await minipayNFTContract.read.tokenURI([nfts[i]]);
-      tokenURIs.push(tokenURI);
-    }
-    return tokenURIs;
-  },
-
-  signTransaction: async function () {
-    let walletClient = createWalletClient({
-      transport: custom(window.ethereum),
-      chain: celoAlfajores,
-    });
-
-    let [address] = await walletClient.getAddresses();
-
-    const res = await walletClient.signMessage({
-      account: address,
-      message: stringToHex('Hello from Celo Composer MiniPay Template!'),
-    });
-
-    return res;
-  },
+    return receipt.status === "success";
+  }
 };
 
 export default blockchainService;

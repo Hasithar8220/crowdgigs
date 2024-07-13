@@ -18,16 +18,21 @@
             <h5 class="heading text-center mt-70">Thank you for your contribution. Please claim your incentive!</h5>
 
             <div class="my-5 mt-30 center">
-
               <form ng-submit="completeSurvey()">
                 <!-- Survey questions here -->
                 <button class="btn-body-public whitetext md-ink-ripple text-center mt-15" type="submit">Claim</button>
               </form>
               <p ng-if="receiverAddress">Payment to be transferred to:</p>
-              <span ng-if="receiverAddress" class="datalabel8 smallitalics"> {{receiverAddress}}</span>
+              <span ng-if="receiverAddress" class="datalabel8 smallitalics">{{receiverAddress}}</span>
+
+              <!-- Display steps -->
+              <div ng-if="steps.length > 0">
+                <h6>Debug Steps:</h6>
+                <ul>
+                  <li ng-repeat="step in steps">{{step}}</li>
+                </ul>
+              </div>
             </div>
-
-
           </div>
         </div>
       </div>
