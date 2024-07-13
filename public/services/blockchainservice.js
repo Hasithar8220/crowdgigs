@@ -26,9 +26,9 @@ const blockchainService = {
   },
 
   async sendCUSD(to, amount) {
-    const amountInWei = parseUnits(amount, 18);
+   
 
-    alert(to); alert(amount); alert(amountInWei); alert(StableTokenABI);
+    const amountInWei =  parseUnits(`${Number(amount)}`, 18);
 
     const tx = await walletClient.writeContract({
       address: cUSDTokenAddress,
