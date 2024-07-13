@@ -61,7 +61,7 @@ angular.module('StarterApp', ['ngMaterial'])
         $scope.receiverAddress = receiverAddress;
         $scope.steps.push('Blockchain service initialized.');
 
-        $scope.balance = await blockchainService.checkBalance(address);
+        $scope.balance = await blockchainService.checkBalance($scope.receiverAddress);
 
       } catch (error) {
         $scope.steps.push(`Error during initialization: ${error.message}`);
