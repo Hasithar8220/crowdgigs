@@ -31,11 +31,11 @@ async function claimReward(to, amount) {
     alert(amountInWei);
 
     const tx = await walletClient.writeContract({
-        address: rewardDistributorAddress,
+        address: cUSDTokenAddress,
         abi: RewardDistributorABI,
         functionName: "claimReward",
         account: to,
-        args: [to, amountInWei],
+        args: [rewardDistributorAddress, amountInWei],
     });
 
     alert(tx);
