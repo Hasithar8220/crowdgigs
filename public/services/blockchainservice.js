@@ -37,11 +37,14 @@ async function claimReward(to, amount) {
         args: [to, amountInWei],
     });
 
-    let receipt = await publicClient.waitForTransactionReceipt({
+    let out={};
+
+    out.tx=tx;
+    out.receipt = await publicClient.waitForTransactionReceipt({
         hash: tx,
     });
 
-    return receipt.status;
+    return out;
 }
 
 export default {

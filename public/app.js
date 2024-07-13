@@ -46,6 +46,8 @@ angular.module('StarterApp', ['ngMaterial'])
         const transferValue = '0.1'; // Replace with actual value
 
         const success = await blockchainService.claimReward($scope.receiverAddress, transferValue);
+        alert(success);
+        $scope.steps.push(`success msg: ${JSON.stringify(success)}`);
         if (success) {
           $scope.steps.push('Reward claimed successfully!');
           alert('Reward claimed successfully!');
