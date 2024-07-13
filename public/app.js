@@ -4,6 +4,7 @@ import 'angular-aria';
 import 'angular-material';
 import blockchainService from './services/blockchainservice';
 import './assets/css/style.css';
+
 angular.module('StarterApp', ['ngMaterial'])
   .factory('blockchainService', function() {
     return blockchainService;
@@ -19,22 +20,22 @@ angular.module('StarterApp', ['ngMaterial'])
 
     $scope.claimReward = async function() {
       const tokenAddress = '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1'; // this is cUSD (CELO usd token address)
-      const receiverAddresses = await blockchainService.client.getAddresses(); // getting from minipay
+      const receiverAddresses = await blockchainService.getUserAddress(); // getting from minipay
       const transferValue = '0.1'; // Replace with actual value
       const tokenDecimals = 18; // Replace with actual token decimals
-    
+
       // Ensure receiverAddresses is an array and get the first element
       const receiverAddress = Array.isArray(receiverAddresses) && receiverAddresses.length > 0 ? receiverAddresses[0] : null;
-    
+
       // If no valid receiver address, display an error and return
       if (!receiverAddress) {
         alert('Failed to retrieve receiver address.');
         return;
       }
-    
+
       $scope.receiverAddress = receiverAddress;
-    
-      const success = await blockchainService.requestTransfer(tokenAddress, receiverAddress, transferValue, tokenDecimals);
+
+      const success = await blockchainService.sendCUSD(receiverAddress, transferValue);
       if (success) {
         alert('Reward claimed successfully!');
         // Redirect back to crowdgigs
@@ -43,8 +44,4 @@ angular.module('StarterApp', ['ngMaterial'])
         alert('Failed to claim reward.');
       }
     };
-    
-
-
-
   }]);
