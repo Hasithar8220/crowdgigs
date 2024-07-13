@@ -29,7 +29,7 @@ async function getUserAddress() {
 async function checkCUSDBalance(address) {
 
     let StableTokenContract = getContract({
-        abi: stableTokenABI,
+        abi: stableTokenABI.abi,
         address: cUSDTokenAddress,
         publicClient,
     });
