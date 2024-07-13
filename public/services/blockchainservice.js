@@ -10,6 +10,12 @@ const publicClient = createPublicClient({
 const rewardDistributorAddress = "0xDa2eD4295a5b277E8cF9eeEE21F44C236A8F86B0";
 const cUSDTokenAddress = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1";
 
+
+function cUsdToWei(amount) {
+    const amountInSmallestUnit = parseUnits(amount.toString(), 18);
+    return amountInSmallestUnit;
+}
+
 async function getUserAddress() {
     let walletClient = createWalletClient({
         transport: custom(window.ethereum),
@@ -26,16 +32,16 @@ async function claimReward(to, amount) {
     });
     alert(to); alert(amount); 
    // const amountInWei = parseEther(amount);
-    const amountInWei = parseUnits(amount, 18);
+    const amountInWei = cUsdToWei(amount);
     
     alert(amountInWei); alert(rewardDistributorAddress); alert(cUSDTokenAddress);
 
     const tx = await walletClient.writeContract({
-        address: cUSDTokenAddress,
+        address: rewardDistributorAddress,
         abi: RewardDistributorABI,
         functionName: "claimReward",
         account: to,
-        args: [rewardDistributorAddress, amountInWei],
+        args: [to, amountInWei]
     });
 
     alert(tx);
