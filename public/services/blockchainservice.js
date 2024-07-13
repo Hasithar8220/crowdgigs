@@ -24,9 +24,11 @@ async function claimReward(to, amount) {
         transport: custom(window.ethereum),
         chain: celoAlfajores,
     });
-
+    alert(to); alert(amount); 
     const amountInWei = parseEther(amount);
     
+    alert(amountInWei);
+
     const tx = await walletClient.writeContract({
         address: rewardDistributorAddress,
         abi: RewardDistributorABI,
