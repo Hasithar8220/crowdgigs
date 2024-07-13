@@ -1,4 +1,4 @@
-import { createPublicClient, createWalletClient, custom, http,parseUnits, parseEther, formatEther } from 'viem';
+import { createPublicClient, createWalletClient, custom, http,parseUnits, parseEther, formatEther, getContract } from 'viem';
 import { celoAlfajores } from 'viem/chains';
 import RewardDistributorABI from '../abi/RewardDistributorABI.json';
 import stableTokenABI from '../abi/cusd-abi.json';
