@@ -25,7 +25,7 @@ async function claimReward(to, amount) {
         chain: celoAlfajores,
     });
 
-    const amountInWei = parseUnits(`${Number(amount)}`, 18);
+    const amountInWei = parseEther(amount);
     
 
     const tx = await walletClient.writeContract({
