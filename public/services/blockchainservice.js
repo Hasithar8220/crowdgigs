@@ -52,21 +52,24 @@ async function claimReward(to, amount) {
     });
 
     // const amountInWei = parseEther(amount);
+    alert(to);
     const amountInWei = cUsdToWei(amount);
+    alert(amountInWei);
+    alert('100000000000000000');
 
-    const approveTx = await walletClient.writeContract({
-        address: cUSDTokenAddress,
-        abi: stableTokenABI.abi,
-        functionName: "approve",
-        account: to,
-        args: [rewardDistributorAddress, cUsdToWei(amountInWei)],
-      });
+    // const approveTx = await walletClient.writeContract({
+    //     address: cUSDTokenAddress,
+    //     abi: stableTokenABI.abi,
+    //     functionName: "approve",
+    //     account: to,
+    //     args: [rewardDistributorAddress, cUsdToWei(amountInWei)],
+    //   });
 
-      let approveReceipt = await publicClient.waitForTransactionReceipt({
-        hash: approveTx,
-      });
+    //   let approveReceipt = await publicClient.waitForTransactionReceipt({
+    //     hash: approveTx,
+    //   });
 
-      alert(approveTx); alert(approveReceipt); 
+    //   alert(approveTx); alert(approveReceipt); 
     
    
     
@@ -75,8 +78,7 @@ async function claimReward(to, amount) {
         abi: RewardDistributorABI,
         functionName: "claimReward",
         account: to,
-        args: [to, amountInWei],
-        gasLimit: 500000
+        args: [to, amountInWei]
     });
 
     alert(tx);
