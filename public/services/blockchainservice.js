@@ -66,5 +66,6 @@ async function claimReward(to, amount) {
 
 export default {
     getUserAddress,
-    claimReward
+    claimReward,
+    checkBalance
 };
