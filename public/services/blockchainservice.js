@@ -31,14 +31,12 @@ async function loadAbi() {
 loadAbi();
 
 const blockchainService = {
+  client,
   requestTransfer: async (tokenAddress, receiverAddress, transferValue, tokenDecimals) => {
     // Ensure the ABI is loaded before attempting the transfer
     if (!stableTokenAbi.length) {
       await loadAbi();
     }
-
-    console.log(tokenAddress, receiverAddress, transferValue, tokenDecimals);
-    console.log(stableTokenAbi);
 
     try {
       let hash = await client.sendTransaction({
