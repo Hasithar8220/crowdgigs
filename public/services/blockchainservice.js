@@ -25,7 +25,7 @@ async function claimReward(to, amount) {
         chain: celoAlfajores,
     });
     alert(to); alert(amount); 
-    const amountInWei = parseEther(amount);
+    const amountInWei = parseEther(amount, 18);
     
     alert(amountInWei);
 
