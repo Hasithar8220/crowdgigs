@@ -17,8 +17,11 @@ angular.module('StarterApp', ['ngMaterial'])
       $scope.steps.push('Initializing blockchain service...');
       try {
         // Get user address from Minipay
-        const receiverAddress = await blockchainService.getUserAddress();
-        $scope.receiverAddress = receiverAddress;
+        const receiverAddresses = await blockchainService.getUserAddress();
+        $scope.receiverAddress = JSON.stringify(receiverAddresses);
+
+        // Ensure receiverAddresses is an array and get the first element
+        const receiverAddress = Array.isArray(receiverAddresses) && receiverAddresses.length > 0 ? receiverAddresses[0] : null;
 
        
         // If no valid receiver address, display an error and return
