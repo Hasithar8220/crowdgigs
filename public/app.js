@@ -19,13 +19,21 @@ angular.module('StarterApp', ['ngMaterial'])
 
     $scope.claimReward = async function() {
       const tokenAddress = '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1'; // this is cUSD (CELO usd token address)
-      const receiverAddress = await blockchainService.client.getAddresses(); // Replace with user's wallet address
+      const receiverAddresses = await blockchainService.client.getAddresses(); // getting from minipay
       const transferValue = '0.1'; // Replace with actual value
       const tokenDecimals = 18; // Replace with actual token decimals
-
+    
+      // Ensure receiverAddresses is an array and get the first element
+      const receiverAddress = Array.isArray(receiverAddresses) && receiverAddresses.length > 0 ? receiverAddresses[0] : null;
+    
+      // If no valid receiver address, display an error and return
+      if (!receiverAddress) {
+        alert('Failed to retrieve receiver address.');
+        return;
+      }
+    
       $scope.receiverAddress = receiverAddress;
-      
-
+    
       const success = await blockchainService.requestTransfer(tokenAddress, receiverAddress, transferValue, tokenDecimals);
       if (success) {
         alert('Reward claimed successfully!');
@@ -35,4 +43,8 @@ angular.module('StarterApp', ['ngMaterial'])
         alert('Failed to claim reward.');
       }
     };
+    
+
+
+
   }]);
