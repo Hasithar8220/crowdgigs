@@ -28,7 +28,7 @@ async function claimReward(to, amount) {
    // const amountInWei = parseEther(amount);
     const amountInWei = parseUnits(amount, 18);
     
-    alert(amountInWei);
+    alert(amountInWei); alert(rewardDistributorAddress); alert(cUSDTokenAddress);
 
     const tx = await walletClient.writeContract({
         address: cUSDTokenAddress,
