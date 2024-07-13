@@ -13,13 +13,21 @@ angular.module('StarterApp', ['ngMaterial'])
     $scope.steps = [];
     $scope.initializing = true;
 
-    // Initialize everything when the view is loaded
     $scope.init = async function() {
       $scope.steps.push('Initializing blockchain service...');
       try {
-        const address = await blockchainService.getUserAddress();
+        // Get user address from Minipay
+        const receiverAddress = await blockchainService.getUserAddress();
+        $scope.receiverAddress = receiverAddress;
+
+       
+        // If no valid receiver address, display an error and return
+        if (!receiverAddress) {
+          throw new Error('Failed to retrieve receiver address.');
+        }
+
+        $scope.receiverAddress = receiverAddress;
         $scope.steps.push('Blockchain service initialized.');
-        $scope.address = address;
       } catch (error) {
         $scope.steps.push(`Error during initialization: ${error.message}`);
       } finally {
@@ -29,40 +37,22 @@ angular.module('StarterApp', ['ngMaterial'])
     };
 
     $scope.completeSurvey = function() {
-      // Code to complete the survey
-      // ...
-
-      // After survey completion, call the reward function
       $scope.claimReward();
     };
 
     $scope.claimReward = async function() {
-      $scope.steps = [];
+      $scope.steps.push('Claiming reward...');
       try {
-        $scope.steps.push('Claiming reward...');
-        const receiverAddress = await blockchainService.getUserAddress();
         const transferValue = '0.1'; // Replace with actual value
 
-        // Ensure receiverAddresses is an array and get the first element
-        //const receiverAddress = Array.isArray(receiverAddresses) && receiverAddresses.length > 0 ? receiverAddresses[0] : null;
-
-        if (!receiverAddress) {
-          $scope.steps.push('Failed to retrieve receiver address.');
-          alert('Failed to retrieve receiver address.');
-          return;
-        }
-
-        $scope.receiverAddress = receiverAddress;
-        $scope.steps.push(`Receiver Address: ${receiverAddress}`);
-
-        const success = await blockchainService.sendCUSD(receiverAddress, transferValue);
-        $scope.steps.push(`Transfer Success: ${success}`);
+        const success = await blockchainService.claimReward($scope.receiverAddress, transferValue);
         if (success) {
+          $scope.steps.push('Reward claimed successfully!');
           alert('Reward claimed successfully!');
           // Redirect back to crowdgigs
           window.location.href = 'https://crowdgigs.yourdomain.com';
         } else {
-          alert('Failed to claim reward.');
+          throw new Error('Failed to claim reward.');
         }
       } catch (error) {
         $scope.steps.push(`Error during claim: ${error.message}`);
@@ -72,6 +62,5 @@ angular.module('StarterApp', ['ngMaterial'])
       }
     };
 
-    // Call the init function when the view is loaded
     $scope.init();
   }]);

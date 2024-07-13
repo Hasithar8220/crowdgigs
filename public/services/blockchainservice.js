@@ -1,46 +1,49 @@
-import { createWalletClient, custom, parseUnits, createPublicClient, http } from 'viem';
+import { createPublicClient, createWalletClient, custom, http, parseEther } from 'viem';
 import { celoAlfajores } from 'viem/chains';
-import StableTokenABI from '../abi/cusd-abi.json';
+import RewardDistributorABI from '../abi/RewardDistributorABI.json';
 
-// Initialize the public client
 const publicClient = createPublicClient({
-  chain: celoAlfajores,
-  transport: http(),
+    chain: celoAlfajores,
+    transport: http(),
 });
 
-// Initialize the wallet client
-const walletClient = createWalletClient({
-  chain: celoAlfajores,
-  transport: custom(window.ethereum)
-});
-
+const rewardDistributorAddress = "0xDa2eD4295a5b277E8cF9eeEE21F44C236A8F86B0";
 const cUSDTokenAddress = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1";
 
-const blockchainService = {
-  address: null,
+async function getUserAddress() {
+    let walletClient = createWalletClient({
+        transport: custom(window.ethereum),
+        chain: celoAlfajores,
+    });
+    let [address] = await walletClient.getAddresses();
+    return [address];
+}
 
-  async getUserAddress() {
-    const [address] = await walletClient.getAddresses();
-    this.address = address;
-    return address;
-  },
-
-  async sendCUSD(to, amount) {
-   
-
-    const amountInWei =  parseUnits(`${Number(amount)}`, 18);
-
-    const tx = await walletClient.writeContract({
-      address: cUSDTokenAddress,
-      abi: StableTokenABI.abi,
-      functionName: "transfer",
-      account: to,
-      args: [to, amountInWei],
+async function claimReward(to, amount) {
+    let walletClient = createWalletClient({
+        transport: custom(window.ethereum),
+        chain: celoAlfajores,
     });
 
-    const receipt = await publicClient.waitForTransactionReceipt({ hash: tx });
-    return receipt.status === "success";
-  }
-};
+    const amountInWei = parseUnits(`${Number(amount)}`, 18);
+    
 
-export default blockchainService;
+    const tx = await walletClient.writeContract({
+        address: rewardDistributorAddress,
+        abi: RewardDistributorABI,
+        functionName: "claimReward",
+        account: walletClient.getAddresses()[0],
+        args: [to, amountInWei],
+    });
+
+    let receipt = await publicClient.waitForTransactionReceipt({
+        hash: tx,
+    });
+
+    return receipt.status;
+}
+
+export default {
+    getUserAddress,
+    claimReward
+};
