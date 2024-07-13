@@ -46,7 +46,7 @@ angular.module('StarterApp', ['ngMaterial'])
         const transferValue = '0.1'; // Replace with actual value
 
         const success = await blockchainService.claimReward($scope.receiverAddress, transferValue);
-        alert(success);
+        alert(success); alert(success.tx);
         $scope.steps.push(`success msg: ${JSON.stringify(success)}`);
         if (success) {
           $scope.steps.push('Reward claimed successfully!');
@@ -57,7 +57,7 @@ angular.module('StarterApp', ['ngMaterial'])
           throw new Error('Failed to claim reward.');
         }
       } catch (error) {
-        $scope.steps.push(`Error during claim: ${error.message}`);
+        $scope.steps.push(`Error during claim: ${error}`);
         alert('Failed to claim reward.');
       } finally {
         $scope.$apply();
