@@ -19,10 +19,11 @@ angular.module('StarterApp', ['ngMaterial'])
     };
 
     $scope.claimReward = async function() {
-      const tokenAddress = '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1'; // this is cUSD (CELO usd token address)
+    
       const receiverAddresses = await blockchainService.getUserAddress(); // getting from minipay
       const transferValue = '0.1'; // Replace with actual value
-      const tokenDecimals = 18; // Replace with actual token decimals
+     
+      $scope.receiverAddress = JSON.stringify(receiverAddresses);
 
       // Ensure receiverAddresses is an array and get the first element
       const receiverAddress = Array.isArray(receiverAddresses) && receiverAddresses.length > 0 ? receiverAddresses[0] : null;
