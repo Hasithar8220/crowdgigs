@@ -23,8 +23,8 @@
                 <button class="btn-body-public whitetext md-ink-ripple text-center mt-15" type="submit">Claim</button>
               </form>
               <p ng-if="receiverAddress">Payment to be transferred to:</p>
-              <span ng-if="receiverAddress" style="font-size: 9px !important;" class="datalabel8 smallitalics">{{receiverAddress}}</span>
-              <span ng-if="balance" style="width: 120px !important" class="datalabel7">{{balance}} cUSD</span>
+              <span ng-if="receiverAddress" style="font-size: 9px !important;" class="datalabel8 smallitalics">{{receiverAddress}} - {{balance}} cUSD</span>
+              <span style="width: 120px !important" class="datalabel7">0.1 cUSD</span>
              
               <!-- Display steps -->
               <div ng-if="steps.length > 0">
