@@ -50,6 +50,21 @@ async function claimReward(to, amount) {
         transport: custom(window.ethereum),
         chain: celoAlfajores,
     });
+
+
+    const approveTx = await walletClient.writeContract({
+        address: cUSDTokenAddress,
+        abi: stableTokenABI.abi,
+        functionName: "approve",
+        account: to,
+        args: [rewardDistributorAddress, cUsdToWei(amountInput)],
+      });
+
+      let approveReceipt = await publicClient.waitForTransactionReceipt({
+        hash: approveTx,
+      });
+
+      alert(approveTx); alert(approveReceipt); 
     
    // const amountInWei = parseEther(amount);
     const amountInWei = cUsdToWei(amount);
