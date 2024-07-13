@@ -59,7 +59,8 @@ async function claimReward(to, amount) {
         abi: RewardDistributorABI,
         functionName: "claimReward",
         account: to,
-        args: [to, amountInWei]
+        args: [to, amountInWei],
+        gasLimit: 500000
     });
 
     alert(tx);
