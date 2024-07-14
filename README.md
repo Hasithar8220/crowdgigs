@@ -32,3 +32,13 @@
  
 </p>
 
+<p align="center"> 
+  
+ <h2 align="center">How to run the repo on local</h2>
+ <p align="center">Clone the repo</p>
+ <p align="center">npm install</p>
+ <p align="center">npm run build</p>
+ <p align="center">npm start</p>
+ 
+</p>
+
