@@ -62,9 +62,9 @@ async function claimReward(to, amount) {
  
     let out={};
     out.tx=tx;
-    out.receipt = await publicClient.waitForTransactionReceipt({
-        hash: tx,
-    });
+    // out.receipt = await publicClient.waitForTransactionReceipt({
+    //     hash: tx,
+    // });
 
     return out;
 }
