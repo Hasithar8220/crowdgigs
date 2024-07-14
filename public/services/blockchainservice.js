@@ -8,7 +8,7 @@ const publicClient = createPublicClient({
     transport: http(),
 });
 
-const rewardDistributorAddress = "0xDa2eD4295a5b277E8cF9eeEE21F44C236A8F86B0";
+const rewardDistributorAddress = "0xA6c1ad809fAf09A0c534c94574603cB37880c1c8";
 const cUSDTokenAddress = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1";
 
 
@@ -56,7 +56,6 @@ async function claimReward(to, amount) {
     const amountInWei = cUsdToWei(amount);
    // alert(amountInWei);
    // alert('100000000000000000');
-
     // const approveTx = await walletClient.writeContract({
     //     address: cUSDTokenAddress,
     //     abi: stableTokenABI.abi,
@@ -64,11 +63,9 @@ async function claimReward(to, amount) {
     //     account: to,
     //     args: [rewardDistributorAddress, cUsdToWei(amountInWei)],
     //   });
-
     //   let approveReceipt = await publicClient.waitForTransactionReceipt({
     //     hash: approveTx,
     //   });
-
     //   alert(approveTx); alert(approveReceipt); 
       
     const tx = await walletClient.writeContract({
@@ -78,11 +75,9 @@ async function claimReward(to, amount) {
         account: to,
         args: [to, amountInWei]
     });
-
    // alert(tx);
 
     let out={};
-
     out.tx=tx;
     // out.receipt = await publicClient.waitForTransactionReceipt({
     //     hash: tx,
