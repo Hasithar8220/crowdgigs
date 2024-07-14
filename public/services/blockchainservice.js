@@ -38,8 +38,7 @@ async function checkCUSDBalance(address) {
         address,
     ]);
   
-    let balanceInWei = balanceInBigNumber.toString();
-  
+    let balanceInWei = balanceInBigNumber.toString();  
     let balanceInEthers = formatEther(balanceInWei);
   
     return balanceInEthers;
@@ -51,22 +50,7 @@ async function claimReward(to, amount) {
         chain: celoAlfajores,
     });
 
-    // const amountInWei = parseEther(amount);
-    //alert(to);
     const amountInWei = cUsdToWei(amount);
-   // alert(amountInWei);
-   // alert('100000000000000000');
-    // const approveTx = await walletClient.writeContract({
-    //     address: cUSDTokenAddress,
-    //     abi: stableTokenABI.abi,
-    //     functionName: "approve",
-    //     account: to,
-    //     args: [rewardDistributorAddress, cUsdToWei(amountInWei)],
-    //   });
-    //   let approveReceipt = await publicClient.waitForTransactionReceipt({
-    //     hash: approveTx,
-    //   });
-    //   alert(approveTx); alert(approveReceipt); 
       
     const tx = await walletClient.writeContract({
         address: rewardDistributorAddress,
@@ -75,13 +59,12 @@ async function claimReward(to, amount) {
         account: to,
         args: [to, amountInWei]
     });
-   // alert(tx);
-
+ 
     let out={};
     out.tx=tx;
-    // out.receipt = await publicClient.waitForTransactionReceipt({
-    //     hash: tx,
-    // });
+    out.receipt = await publicClient.waitForTransactionReceipt({
+        hash: tx,
+    });
 
     return out;
 }

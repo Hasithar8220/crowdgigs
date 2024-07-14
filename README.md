@@ -7,8 +7,8 @@
   <p align="center">
    crowdsnap.ai is a market research platform that ensures higher data hygiene and trust. With crowdgigs extension we are aiming to access over 20M CELO minipay users who can contribute our research surveys to earn rewards by sharing their valuable insights.
   </p>
- <a target="_blank" href="https://alfajores.celoscan.io/address/0xDa2eD4295a5b277E8cF9eeEE21F44C236A8F86B0">
-     Reward Distribution Contract: 0xDa2eD4295a5b277E8cF9eeEE21F44C236A8F86B0
+ <a target="_blank" href="https://alfajores.celoscan.io/address/0xA6c1ad809fAf09A0c534c94574603cB37880c1c8">
+     Reward Distribution Contract: 0xA6c1ad809fAf09A0c534c94574603cB37880c1c8
     </a>
   
 </p>
