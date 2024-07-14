@@ -24,7 +24,7 @@
 
 <p align="center"> 
   
- <h2 align="center">Not about the repo</h2>
+ <h2 align="center">Note about the repo</h2>
  <p align="center">This repo contains the code to claim the incentive using minipay</p>
  <p align="center">It is deployed in Azure</p>
  <p align="center"><a target="_blank" href="https://crowdsnapgigs.azurewebsites.net"> CrowdGigs Incentive Module </a>   </p>
