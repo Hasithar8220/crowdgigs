@@ -13,3 +13,12 @@
   
 </p>
 
+<p align="center"> 
+  
+ <h2 align="center">How to run the test on MiniPay</h2>
+ <p align="center">Install opera mini beta browser on your android</p>
+ <p align="center">Install opera mini beta minipay wallet add-on</p>
+ <p align="center">Open https://crowdsnap.ai/crowdgigs</p>
+ <p align="center">Take a Survey and Claim your incentive! Enjoy!</p>
+</p>
+
