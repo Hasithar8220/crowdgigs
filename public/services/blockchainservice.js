@@ -52,10 +52,10 @@ async function claimReward(to, amount) {
     });
 
     // const amountInWei = parseEther(amount);
-    alert(to);
+    //alert(to);
     const amountInWei = cUsdToWei(amount);
-    alert(amountInWei);
-    alert('100000000000000000');
+   // alert(amountInWei);
+   // alert('100000000000000000');
 
     // const approveTx = await walletClient.writeContract({
     //     address: cUSDTokenAddress,
@@ -70,9 +70,7 @@ async function claimReward(to, amount) {
     //   });
 
     //   alert(approveTx); alert(approveReceipt); 
-    
-   
-    
+      
     const tx = await walletClient.writeContract({
         address: rewardDistributorAddress,
         abi: RewardDistributorABI,
@@ -81,7 +79,7 @@ async function claimReward(to, amount) {
         args: [to, amountInWei]
     });
 
-    alert(tx);
+   // alert(tx);
 
     let out={};
 
